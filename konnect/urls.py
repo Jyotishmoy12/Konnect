@@ -28,4 +28,10 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     # to handle account management
     path("accounts/", include("django.contrib.auth.urls")),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if not settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
