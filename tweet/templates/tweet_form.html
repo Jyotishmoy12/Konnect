@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Konnect
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        min-height: 100vh;
+    }
+
+    .tweet-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .tweet-card {
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 40px;
+        width: 100%;
+        max-width: 600px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+        animation: slideUp 0.6s ease-out;
+    }
+
+    .tweet-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #ffc107, #e0a800, #ffc107);
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+        0%, 100% { background-position: 200% 0; }
+        50% { background-position: -200% 0; }
+    }
+
+    .tweet-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .tweet-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #ffc107, #e0a800);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .form-label {
+        color: #e0e0e0 !important;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control, .form-select, textarea {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 2px solid rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+        border-radius: 16px;
+        padding: 14px 18px;
+        font-size: 15px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus, textarea:focus {
+        outline: none;
+        border-color: #ffc107 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.15) !important;
+    }
+
+    .form-control::placeholder, textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+    }
+
+    input[type="file"] {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: #fff !important;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #555;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+        background-color: #ffc107;
+        color: #000;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        margin-right: 10px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #ffc107, #e0a800);
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(255, 193, 7, 0.3);
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 14px;
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 193, 7, 0.4);
+    }
+
+    .btn-outline-secondary {
+        border: 1px solid #777;
+        color: #ccc;
+        background-color: transparent;
+        border-radius: 14px;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #555;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Optional: smooth transitions */
+    form * {
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+
+<div class="tweet-container">
+    <div class="tweet-card">
+        <div class="tweet-header">
+            <h3>
+                <i class="fas fa-feather-alt me-2"></i>
+                {% if form.instance.pk %}
+                    Edit Tweet
+                {% else %}
+                    Create Tweet
+                {% endif %}
+            </h3>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary me-md-2">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Back
+                </a>
+                <button class="btn btn-warning" type="submit">
+                    <i class="fas fa-paper-plane me-1"></i>
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
