@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-default-secret-key")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
-ALLOWED_HOSTS = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "").split(",") + ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ["https://konnect-mkc6.onrender.com/"]
 
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
