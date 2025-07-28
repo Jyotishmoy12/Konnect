@@ -1,1 +1,1 @@
-web: gunicorn konnect.wsgi
+web: gunicorn konnect.wsgi:application
