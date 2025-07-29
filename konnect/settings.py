@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'theme',
     'cloudinary_storage',
     'cloudinary',
-    'django.contrib.staticfiles',
     # 'django_browser_reload',
 ]
 
